@@ -44,7 +44,13 @@ public class ContentItemController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteItem(@PathVariable Long id) {
-        contentItemService.deleteItem(id);
-        return ResponseEntity.ok("Item deleted");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        try {
+            contentItemService.deleteItem(id, username);
+            return ResponseEntity.ok("Item deleted");
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 }

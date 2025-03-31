@@ -41,7 +41,7 @@ public class AIService {
         String promptText = "From the given description, generate an simple yet accurate, clear and concise title"
                             + description + "Make sure it matches with whatevere is being set here, be it a link, an article or whatever."+
                             "Just choose one which matches all the required conditions mentioned by me"
-                            +"You also need to be consistent with what give, even if the same description is repeated again you should give the same output which was once previously given";
+                            +"You also need to be consistent with what give and keep the title to fewer words, only return the title without formatting even if the same description is repeated again you should give the same output which was once previously given";
 
 
         var prompt = new Prompt(new UserMessage(promptText));

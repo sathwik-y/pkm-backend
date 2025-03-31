@@ -33,6 +33,8 @@ public class ContentItem {
     private Long contentId;
     private String title;
     private String type;
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String category;
     @Lob

@@ -53,7 +53,14 @@ public class ContentItemService {
     }
 
     @Transactional
-    public void deleteItem(Long id) {
+    public void deleteItem(Long id, String username) {
+        ContentItem item = contentItemRepo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Item not found"));
+        
+        if (!item.getUser().getUserName().equals(username)) {
+            throw new RuntimeException("You don't have permission to delete this item");
+        }
+        
         contentItemRepo.deleteById(id);
     }
 

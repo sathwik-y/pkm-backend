@@ -78,7 +78,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
-            "https://pkm-livid.vercel.app/","https://pkm-87z5.onrender.com", "http://localhost:5174")); // Explicitly allow frontend origin
+            "https://pkm-livid.vercel.app/","https://pkm-87z5.onrender.com", "http://localhost:5173")); // Explicitly allow frontend origin
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Specific headers
         configuration.setExposedHeaders(List.of("Authorization")); // Expose Authorization header if needed
