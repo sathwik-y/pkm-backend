@@ -62,7 +62,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://pkm-livid.vercel.app/")); // Explicitly allow frontend origin
+        configuration.setAllowedOrigins(List.of("https://pkm-livid.vercel.app")); // Explicitly allow frontend origin
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Specific headers
         configuration.setExposedHeaders(List.of("Authorization")); // Expose Authorization header if needed
