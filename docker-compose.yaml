@@ -5,5 +5,5 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://pkm-mysql-sathwikyellapragada-1aef.k.aivencloud.com:14817/defaultdb?ssl-mode=REQUIRED
+      - SPRING_DATASOURCE_URL=jdbc:mysql://avnadmin:AVNS_Muh3J432UlrMqMngIGu@pkm-sathwikyellapragada-1aef.h.aivencloud.com:14817/defaultdb?ssl-mode=REQUIRED
       - SPRING_DATASOURCE_USERNAME=avnadmin

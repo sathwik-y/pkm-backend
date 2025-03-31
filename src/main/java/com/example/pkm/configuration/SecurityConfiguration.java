@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @EnableWebSecurity
@@ -37,7 +38,18 @@ public class SecurityConfiguration {
                 .requestMatchers("/register", "/login").permitAll()
                 .requestMatchers("/items/**", "/tag/**", "/notifications/**", "/dashboard").authenticated()
                 .anyRequest().authenticated());
+
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter((request, response, chain) -> {
+                    String path = ((HttpServletRequest) request).getRequestURI();
+                    if (path.equals("/register") || path.equals("/login")) {
+                        chain.doFilter(request, response);  // Skip JWT filter
+                        return;
+                    }
+                    jwtFilter.doFilter(request, response, chain);  // Apply JWT filter for other endpoints
+                }, UsernamePasswordAuthenticationFilter.class);
+
         http.logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
@@ -62,7 +74,11 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://pkm-livid.vercel.app/")); // Explicitly allow frontend origin
+        configuration.setAllowedOrigins(List.of(
+            "https://pkm-livid.vercel.app",
+            "http://localhost:5174",
+                "https://pkm-87z5.onrender.com"
+        )); // Explicitly allow frontend origin
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Specific headers
         configuration.setExposedHeaders(List.of("Authorization")); // Expose Authorization header if needed
