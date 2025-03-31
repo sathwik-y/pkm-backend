@@ -1,1 +1,5 @@
-FROM openjdk:21-jdk-slimWORKDIR /appCOPY target/pkm-0.0.1-SNAPSHOT.jar app.jarEXPOSE 8080CMD ["java", "-jar", "app.jar"]
+FROM openjdk:21-jdk-slim
+WORKDIR /app
+COPY target/pkm-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
+CMD ["java", "-jar", "app.jar"]
